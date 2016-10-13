@@ -1,0 +1,28 @@
+# ambient light to render a face
+Film "image" 
+	"integer xresolution" [512] "integer yresolution" [512] 
+"string filename" "./ambient.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+PixelFilter"box"
+
+LookAt 0 0 800  0 0 0  0 1 0
+Scale -1 1 1
+Camera "perspective" "float fov" [25] 
+
+WorldBegin
+
+AttributeBegin
+#  LightSource "distant" "point from" [0.11128    -0.38455     0.91637] "point to" [0 0 0] "rgb L" [2 2 2]
+	LightSource "infinite" "string mapname" ["./pbEnv.exr"]		# This is a constant environment light. it seems if pbrt cannot find the path, its default uses ambient lighting...
+	"color L" [1 1 1]
+	"integer nsamples" [8]
+AttributeEnd
+
+Rotate 0 0 1 0
+Rotate 15 1 0 0
+Rotate 0 1 0 0
+
+Include "model.pbrt"
+
+WorldEnd

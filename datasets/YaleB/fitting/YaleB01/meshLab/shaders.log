@@ -1,0 +1,17 @@
+VERTEX SHADER COMPILE INFO:
+
+
+
+FRAGMENT SHADER COMPILE INFO:
+
+Fragment shader failed to compile with the following errors:
+ERROR: 0:52: error(#164) l-value required: assign "Cs" (can't modify an input)
+ERROR: 0:53: error(#162) Wrong operand types: no operation "&&" exists that takes a left-hand operand of type "uniform mediump int" and a right operand of type "bool" (or there is no acceptable conversion)
+ERROR: 0:62: error(#164) l-value required: assign "Cs" (can't modify an input)
+ERROR: 0:63: error(#162) Wrong operand types: no operation "&&" exists that takes a left-hand operand of type "uniform mediump int" and a right operand of type "bool" (or there is no acceptable conversion)
+ERROR: 0:72: error(#164) l-value required: assign "Cs" (can't modify an input)
+ERROR: 0:73: error(#162) Wrong operand types: no operation "&&" exists that takes a left-hand operand of type "uniform mediump int" and a right operand of type "bool" (or there is no acceptable conversion)
+ERROR: error(#273) 6 compilation errors.  No code generated
+
+
+

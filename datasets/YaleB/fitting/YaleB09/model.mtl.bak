@@ -1,0 +1,27 @@
+newmtl Texture0
+    Ns 20
+    d 1
+    illum 2
+    Kd 0.7 0.7 0.7
+    Ks 0 0 0
+    Ka 0 0 0
+    map_Kd YaleB09_eyeL_hi.tga
+
+newmtl Texture1
+    Ns 20
+    d 1
+    illum 2
+    Kd 0.7 0.7 0.7
+    Ks 0 0 0
+    Ka 0 0 0
+    map_Kd YaleB09_eyeR_hi.tga
+
+newmtl Texture2
+    Ns 20
+    d 1
+    illum 2
+    Kd 0.7 0.7 0.7
+    Ks 0 0 0
+    Ka 0 0 0
+    map_Kd YaleB09_skin_hi.tga
+

@@ -1,0 +1,50 @@
+# Direct light to render a face
+Film "image" 
+	"integer xresolution" [512] "integer yresolution" [512] 
+"string filename" "./BFM_fitting_imgs/042.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+PixelFilter"box"
+
+LookAt 0 3 0  0 0 0  0 0 1
+ConcatTransform [1 0 0 0  0 0 1 0  0 1 0 0  0 0 0 1]
+Camera "orthographic" "float screenwindow" [-1.8 1.8 -1.8 1.8]
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [1  0  0] "point to" [0 0 0] "rgb L" [1 1 1]
+#	LightSource "infinite" "string mapname" ["../textures/pbEnv.exr"]
+#	"color L" [.1 .1 .1]
+#	"integer nsamples" [8]
+AttributeEnd
+Include "BFM.pbrt"
+
+WorldEnd
+##########################################################################
+# use of create-probes renderer
+Film "image"
+	"integer xresolution" [512] "integer yresolution" [512]
+    "string filename" "sphere.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8] 
+PixelFilter "box"
+
+LookAt 0 3 0  0 0 0  0 0 1
+ConcatTransform [1 0 0 0  0 0 1 0  0 1 0 0  0 0 0 1]
+Camera "orthographic" "float screenwindow" [-1.8 1.8 -1.8 1.8]
+
+SurfaceIntegrator "directlighting"
+Renderer "createprobes" "string filename" "./BFM_fitting_imgs/042.out"
+  "integer lmax" [2] "bool indirectlighting" ["false"]
+  "float samplespacing" [8]
+   "float bounds" [ -4 -4 -4 4 4 4]
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [1  0  0] "point to" [0 0 0] "rgb L" [1 1 1]
+AttributeEnd
+Include "BFM.pbrt"
+
+WorldEnd

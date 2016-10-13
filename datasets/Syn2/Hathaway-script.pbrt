@@ -1,0 +1,62 @@
+# Direct light to render a face
+Film "image" 
+	"integer xresolution" [512] "integer yresolution" [512] 
+"string filename" "../tons/500.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+PixelFilter"box"
+
+LookAt 0 0 800  0 0 0  0 1 0
+Scale -1 1 1
+Camera "perspective" "float fov" [25] 
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [0.13866     -0.5639     0.81412] "point to" [0 0 0] "rgb L" [2 2 2]
+	LightSource "infinite" "string mapname" ["./pbEnv.exr"]		# This is a constant environment light.
+	"color L" [.1 .1 .1]
+	"integer nsamples" [8]
+AttributeEnd
+
+Rotate 5.6772 0 1 0
+Rotate 15 1 0 0
+Rotate -7.0507 1 0 0
+
+Include "./Geo-Hathaway.pbrt"
+
+WorldEnd
+##########################################################################
+# use of create-probes renderer
+Film "image"
+	"integer xresolution" [512] "integer yresolution" [512]
+    "string filename" "sphere3.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8] 
+PixelFilter "box"
+
+LookAt 0 0 800  0 0 0  0 1 0
+Scale -1 1 1
+Camera "perspective" "float fov" [25] 
+
+SurfaceIntegrator "directlighting"
+Renderer "createprobes" "string filename" "../tons/500.out"
+  "integer lmax" [2] "bool indirectlighting" ["false"]
+  "float samplespacing" [8]
+   "float bounds" [ -4 -4 -4 4 4 4]
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [0.13866     -0.5639     0.81412] "point to" [0 0 0] "rgb L" [2 2 2]
+	LightSource "infinite" "string mapname" ["./pbEnv.exr"]
+	"color L" [.1 .1 .1]
+	"integer nsamples" [8]
+AttributeEnd
+
+Rotate 5.6772 0 1 0
+Rotate 15 1 0 0
+Rotate -7.0507 1 0 0
+Include "./Geo-Hathaway.pbrt"
+
+WorldEnd

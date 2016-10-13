@@ -1,0 +1,30 @@
+# use of create-probes renderer
+Film "image"
+	"integer xresolution" [512] "integer yresolution" [512]
+    "string filename" "sphere3.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8] 
+PixelFilter "box"
+
+LookAt 0 0 4  0 0 0  0 1 0
+Scale -1 1 1
+Camera "perspective" "float fov" [25] 
+
+SurfaceIntegrator "directlighting"
+Renderer "createprobes" "string filename" "../datasets/MultiPIE_GTcoeffs/013.out"
+  "integer lmax" [2] "bool indirectlighting" ["false"]
+  "float samplespacing" [8]
+   "float bounds" [ -4 -4 -4 4 4 4]
+
+WorldBegin
+
+AttributeBegin
+  LightSource "distant" "point from" [-1  0  0] "point to" [0 0 0] "rgb L" [2 2 2]
+AttributeEnd
+
+AttributeBegin
+	Material "matte" "color Kd" [.5 .5 .5]
+	Shape "sphere" "float radius" [2]
+AttributeEnd
+
+WorldEnd

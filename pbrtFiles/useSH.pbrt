@@ -1,0 +1,24 @@
+# use given SH coeffs to render sphere.
+# use the lighting SH coeffs from Matlab "lightingEstimate.m" to render a sphere for examine
+# the SH coeffs from Matlab are defined in a different world coord attached to object, So the ConcatTransform here do the conversion.
+# See the notes in Youdao 15.3.23
+LookAt 0 8 0  0 0 0  0 0 1
+ConcatTransform [1 0 0 0  0 0 1 0  0 1 0 0  0 0 0 1]
+Camera "orthographic" "float screenwindow" [-4 4 -4 4]
+Film "image"
+	"integer xresolution" [512] "integer yresolution" [512]
+    "string filename" "sphere.exr"
+PixelFilter "box"
+SurfaceIntegrator "useprobes" "string filename" "SH.out" 
+Sampler "lowdiscrepancy" "integer pixelsamples" [8]
+Renderer "sampler"
+
+WorldBegin
+
+AttributeBegin
+	Material "matte" "color Kd" [.5 .5 .5]
+#	Material "matte" "color Kd" [1 1 1]
+	Shape "sphere" "float radius" [2]
+AttributeEnd
+
+WorldEnd

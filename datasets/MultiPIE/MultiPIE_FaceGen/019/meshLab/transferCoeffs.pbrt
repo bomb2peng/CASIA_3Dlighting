@@ -1,0 +1,43 @@
+# use of create-probes renderer
+Film "image"
+	"integer xresolution" [512] "integer yresolution" [512]
+    "string filename" "sphere.exr"
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [8] 
+PixelFilter "box"
+
+LookAt 0 0 4  0 0 0  0 1 0
+#LookAt 0 0 800  0 0 0  0 1 0
+Scale -1 1 1
+Camera "orthographic" "float screenwindow" [-4 4 -4 4]
+#Camera "perspective" "float fov" [25] 
+
+SurfaceIntegrator "directlighting"
+Renderer "createprobes" "string filename" "./transferCoeffs.out"
+  "integer lmax" [2] "bool indirectlighting" ["false"]
+  "float samplespacing" [8]
+   "float bounds" [ -4 -4 -4 4 4 4]
+#Renderer "sampler"
+
+WorldBegin
+
+#AttributeBegin
+#  LightSource "distant" "point from" [1 0 0] "point to" [0 0 0] "rgb L" [1 1 1] "integer nsamples" [256]
+#AttributeEnd
+
+AttributeBegin
+#  LightSource "distant" "point from" [0 0 1] "point to" [0 0 0] "rgb L" [3.5 3.5 3.5]
+	Rotate -90 1 0 0
+	LightSource "infinite" "string mapname" ["pbEnv_small.exr"]
+	"color L" [1 1 1]
+#	"integer nsamples" [65536]			## the more samples, the less noise.
+"integer nsamples" [1024]
+#	"integer nsamples" [256]
+AttributeEnd
+
+AttributeBegin
+	Material "matte" "color Kd" [1 1 1]
+AttributeEnd
+Include "model.pbrt"
+
+WorldEnd

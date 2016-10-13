@@ -1,0 +1,11 @@
+close all;
+sph = icosphere(1);
+figure;
+trimesh(sph.Faces, sph.Vertices(:,1), sph.Vertices(:,2), sph.Vertices(:,3), ones(size(sph.Vertices, 1), 1));
+C = zeros(size(sph.Vertices, 1), 3);
+C(:,3) = 1;
+colormap(C);
+hold on;
+plot3(sph.Vertices(:,1), sph.Vertices(:,2), sph.Vertices(:,3), 'r*');
+axis equal vis3d;
+axis off;
