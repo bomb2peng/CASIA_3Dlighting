@@ -26,7 +26,7 @@ How to run:
 "TIFS_Syn2_FaceGen.m"
 "TIFS_YaleB_FaceGen.m"
 "TIFS_MultiPIE_FaceGen.m"
-"TIFS_DSO_Morph.m" -- The file is not supported for now, because of copyright concerns. It requires modified code from Xiangyu Zhu's CVPR15 paper and also the Basel Face Model.
+"TIFS_DSO_Morph.m" -- This file requires extra dependencies on Xiangyu Zhu's (http://www.cbsr.ia.ac.cn/users/xiangyuzhu) CVPR15 code (need modification) and the Basel Face Model.
 
 Notes:
 1. Results of ROC curves can change from time to time, because the selected 10,000 pairs are random. So you may get slightly different AUC results from the ones reported in the paper, but the differences should be small.
