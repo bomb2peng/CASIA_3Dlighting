@@ -1,5 +1,5 @@
 Introduction:
-This is the project for the under-review TIFS paper "Optimized 3D Lighting Environment Estimation for Image Forgery Detection" by Bo Peng, Wei Wang, Jing Dong and Tieniu Tan.
+This is the project for the paper "Optimized 3D Lighting Environment Estimation for Image Forgery Detection" by Bo Peng, Wei Wang, Jing Dong and Tieniu Tan, which is accepted for publication by IEEE Transaction on Information Forensics and Security (TIFS). This TIFS paper is extended from our WIFS 2015 conference paper "Improved 3D lighting environment estimation for image forgery detection" (http://ieeexplore.ieee.org/document/7368587/?reload=true&arnumber=7368587).
 
 Terms of use:
 1. The code and algorithm in this project are for non-commercial use only.
