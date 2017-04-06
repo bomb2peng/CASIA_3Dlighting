@@ -1,43 +1,57 @@
-for k = 1:2
-    if k == 1
-        LsameN = LsameN1;
-        LdiffN = LdiffN1;
-        DsameK = Dsame1;
-        DdiffK = Ddiff1;
-        Th = T3(abs(FA3-0.05)<1e-3);
-        Th = Th(end);
-    elseif k == 2
-        LsameN = LsameN2;
-        LdiffN = LdiffN2;
-        DsameK = Dsame2;
-        DdiffK = Ddiff2;
-        Th = T2(abs(FA2-0.05)<1e-3);
-        Th = Th(end);
+% % Compute the ROC curves
+N = 200;
+DistFaridMorph = zeros(N, 1);
+DistFitGreyMorph = zeros(N, 1);
+for i = 1:N
+    if sum(LcoeffFaridMorph(:,1,i)) == 0    % skipped ones
+        continue;
     end
-    temp = LsameN(DsameK > Th);
-    FA_K = zeros(18, 1);  % false alarm
-    for i = 1:18
-        FA_K(i) = sum(temp == i)/sum(LsameN == i);
-        if sum(LsameN == i) == 0
-            FA_K(i) = 0;
-        end
-    end
-%     figure, plot(1:18, FA_K);
-
-    temp = LdiffN(DdiffK < Th);
-    MD_K = zeros(18, 18);  % miss rate
-    for i = 1:18
-        for j = 1:18
-            MD_K(i,j) = sum(temp == sub2ind([18,18],i,j))/sum(LdiffN == sub2ind([18,18],i,j));
-            if sum(LdiffN == sub2ind([18,18],i,j)) == 0
-                MD_K(i,j) = 0;
-            end
-        end
-    end
-    errMap = MD_K + diag(FA_K);
-    figure, 
-    set (gca,'position',[0.05,0.05,0.9,0.9] );
-    imshow(errMap);
-    colormap('jet');
-    colorbar;
+    DistFaridMorph(i) = Dist(LcoeffFaridMorph(:,1,i), LcoeffFaridMorph(:,2,i));
+    DistFitGreyMorph(i) = Dist(LcoeffFitGreyMorph(:,1,i), LcoeffFitGreyMorph(:,2,i));
 end
+label = cell(N, 1);
+for i = 1:100
+    label{i} = 'normal';
+end
+for i = 101:200
+    label{i} = 'splicing';
+end
+% subset_select = [7,9:13,54,55,58,59,78,79,90,91,93,100,...
+%     106:108,117:120,123,125:129,134:136,139,140,145,148,162,164,170,171,...
+%     174,187,190,];
+subset_select = 1:200;
+flag = zeros(200,1);
+flag(subset_select) = 1;
+flag = logical(flag);
+flag = ~flag;
+DistFaridMorph2 = DistFaridMorph;
+DistFitGreyMorph2 = DistFitGreyMorph;
+DistFaridMorph2(flag) = 0;
+DistFitGreyMorph2(flag) = 0;
+label(DistFaridMorph2 == 0) = [];
+
+DistFaridMorphNormal = DistFaridMorph2(1:100);
+DistFaridMorphNormal(DistFaridMorphNormal == 0) = [];
+DistFaridMorphSplicing = DistFaridMorph2(101:200);
+DistFaridMorphSplicing(DistFaridMorphSplicing == 0) = [];
+DistFitGreyMorphNormal = DistFitGreyMorph2(1:100);
+DistFitGreyMorphNormal(DistFitGreyMorphNormal == 0) = [];
+DistFitGreyMorphSplicing = DistFitGreyMorph2(101:200);
+DistFitGreyMorphSplicing(DistFitGreyMorphSplicing == 0) = [];
+
+% % % ROC plot
+[FA1,DR1,T1,AUC1] = perfcurve(label, [DistFaridMorphNormal; DistFaridMorphSplicing], 'splicing');   
+[FA2,DR2,T2,AUC2] = perfcurve(label, [DistFitGreyMorphNormal; DistFitGreyMorphSplicing], 'splicing');
+figure;
+res = 5;
+fs = 12;
+plot(FA1(1:res:end), DR1(1:res:end), 'b-x', 'LineWidth', 2);
+hold on;
+plot(FA2(1:res:end), DR2(1:res:end), 'r-o', 'LineWidth', 2);
+plot([0 1], [0 1], 'g-', 'LineWidth', 2);
+legend('Kee & Farid''s', 'Proposed', 'Random Guess');
+xlabel('False Alarm Rate', 'FontSize', fs); ylabel('Detection Rate', 'FontSize', fs)
+title('ROC curve', 'FontSize', fs)
+grid on;
+set(gca, 'fontsize', fs);
+[AUC1, AUC2]

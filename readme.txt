@@ -26,7 +26,7 @@ How to run:
 "TIFS_Syn2_FaceGen.m"
 "TIFS_YaleB_FaceGen.m"
 "TIFS_MultiPIE_FaceGen.m"
-"TIFS_DSO_Morph.m" -- This file requires extra dependencies on Xiangyu Zhu's (http://www.cbsr.ia.ac.cn/users/xiangyuzhu) CVPR15 code (need modification) and the Basel Face Model.
+"TIFS_DSO_Morph.m" -- This file requires extra dependencies on Xiangyu Zhu's (http://www.cbsr.ia.ac.cn/users/xiangyuzhu) CVPR15 code (need modification) and the Basel Face Model. For the convenience of experimental comparison, we also included the estimated lighting coefficients and the used face pairs in 'datasets/DSO-1'. See the "readme.txt" in that folder for more details.
 
 Notes:
 1. Results of ROC curves can change from time to time, because the selected 10,000 pairs are random. So you may get slightly different AUC results from the ones reported in the paper, but the differences should be small.

@@ -142,17 +142,19 @@ end
 % % % % save('.\CarvolhoDataset_results\DSO_archive.mat');
 toc
 % % 
+% % 
 % % % Compute the ROC curves
-% DistFaridMorph = zeros(numel(imNames), 1);
-% DistFitGreyMorph = zeros(numel(imNames), 1);
-% for i = 1:numel(imNames)
+% N = 200;
+% DistFaridMorph = zeros(N, 1);
+% DistFitGreyMorph = zeros(N, 1);
+% for i = 1:N
 %     if sum(LcoeffFaridMorph(:,1,i)) == 0    % skipped ones
 %         continue;
 %     end
 %     DistFaridMorph(i) = Dist(LcoeffFaridMorph(:,1,i), LcoeffFaridMorph(:,2,i));
 %     DistFitGreyMorph(i) = Dist(LcoeffFitGreyMorph(:,1,i), LcoeffFitGreyMorph(:,2,i));
 % end
-% label = cell(numel(imNames), 1);
+% label = cell(N, 1);
 % for i = 1:100
 %     label{i} = 'normal';
 % end
@@ -181,7 +183,7 @@ toc
 % DistFitGreyMorphNormal(DistFitGreyMorphNormal == 0) = [];
 % DistFitGreyMorphSplicing = DistFitGreyMorph2(101:200);
 % DistFitGreyMorphSplicing(DistFitGreyMorphSplicing == 0) = [];
-
+% 
 % % % % error distribution plot
 % % edge = 0:0.05:1;
 % % [count1, center1] = hist(DistFaridMorphNormal, edge);
@@ -199,7 +201,7 @@ toc
 % % title('Comparison of error distributions', 'fontsize', fs);
 % % set(gca, 'fontsize', fs);
 % % grid on;
-
+% 
 % % % % ROC plot
 % [FA1,DR1,T1,AUC1] = perfcurve(label, [DistFaridMorphNormal; DistFaridMorphSplicing], 'splicing');   
 % [FA2,DR2,T2,AUC2] = perfcurve(label, [DistFitGreyMorphNormal; DistFitGreyMorphSplicing], 'splicing');
@@ -216,33 +218,33 @@ toc
 % grid on;
 % set(gca, 'fontsize', fs);
 % [AUC1, AUC2]
-
-% % % inspect the results
-% close all;
-% temp = sort(DistFitGreyMorphNormal, 1, 'descend');
-% for i = numel(temp)-4
-%     idx = find(DistFitGreyMorph == temp(i));
-%     assert(numel(idx) == 1);
-%     im = imread(fullfile(dataDir, imNames(idx).name));
-%     figure('Name', num2str(temp(i)));
-%     imshow(im);
-%     lm = landmarks{idx};
-%     s = select(idx, :);
-%     c = zeros(2,2);
-%     for j = 1:2
-%         width = range(lm(:,1,s(j)));
-%         height = range(lm(:,2,s(j)));
-%         xmin = min(lm(:,1,s(j)));
-%         ymin = min(lm(:,2,s(j)));
-%         c(j, :) = mean(lm(:,:,s(j)), 1);
-%         rectangle('Position', [xmin-width/3, ymin-height/3, 5/3*width, 5/3*height], 'EdgeColor', 'g');
-%         text(xmin-width/3, ymin-height/3, num2str(j), 'Color', [0 1 0], 'FontSize', 12);
-%     end
-%     center = mean(c, 1);
-%     text(center(1), center(2), sprintf('%0.3f', temp(i)), 'Color', [1 0 0], 'FontSize', 20);
-%     set(gca,'position',[0 0 1 1],'units','normalized');
-%     for j = 1:2
-%         plotLitSphere2(LcoeffFitGreyMorph(:,j,idx), 4, true);
-%         set(gca,'position',[0 0 1 1],'units','normalized');
-%     end
-% end
+% 
+% % % % inspect the results
+% % close all;
+% % temp = sort(DistFitGreyMorphNormal, 1, 'descend');
+% % for i = numel(temp)-4
+% %     idx = find(DistFitGreyMorph == temp(i));
+% %     assert(numel(idx) == 1);
+% %     im = imread(fullfile(dataDir, imNames(idx).name));
+% %     figure('Name', num2str(temp(i)));
+% %     imshow(im);
+% %     lm = landmarks{idx};
+% %     s = select(idx, :);
+% %     c = zeros(2,2);
+% %     for j = 1:2
+% %         width = range(lm(:,1,s(j)));
+% %         height = range(lm(:,2,s(j)));
+% %         xmin = min(lm(:,1,s(j)));
+% %         ymin = min(lm(:,2,s(j)));
+% %         c(j, :) = mean(lm(:,:,s(j)), 1);
+% %         rectangle('Position', [xmin-width/3, ymin-height/3, 5/3*width, 5/3*height], 'EdgeColor', 'g');
+% %         text(xmin-width/3, ymin-height/3, num2str(j), 'Color', [0 1 0], 'FontSize', 12);
+% %     end
+% %     center = mean(c, 1);
+% %     text(center(1), center(2), sprintf('%0.3f', temp(i)), 'Color', [1 0 0], 'FontSize', 20);
+% %     set(gca,'position',[0 0 1 1],'units','normalized');
+% %     for j = 1:2
+% %         plotLitSphere2(LcoeffFitGreyMorph(:,j,idx), 4, true);
+% %         set(gca,'position',[0 0 1 1],'units','normalized');
+% %     end
+% % end
